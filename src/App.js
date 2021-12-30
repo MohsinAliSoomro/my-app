@@ -5,6 +5,7 @@ import { SocketContext, SocketProvider } from "./state/socket";
 import { useContext } from "react";
 import MessageComponent from "./components/MessageComponent";
 import MessageComponentSearch from "./components/MessageComponentSearch";
+import ChatContainer from "./components/Chat";
 // const SERVER = "http://localhost:5000";
 // const socket = io(SERVER);
 
@@ -13,7 +14,7 @@ function App() {
   const socket = useContext(SocketContext);
   const [recipient, setRecipient] = useState();
   const [userId, setUserId] = useState();
-
+  const [chatScreen, setChatScreen] = useState([]);
   const senderId = localStorage.getItem("senderId");
 
   const [dashboardShow, setDashboardShow] = useState(false);
@@ -29,6 +30,13 @@ function App() {
   const selectUser = (user) => {
     setRecipient(user);
   };
+
+  const getSelectUserIndex = (index) => {
+    console.log(index);
+    if (chatScreen.find((f) => f === index)) return;
+    setChatScreen((prev) => [...prev, index]);
+  };
+
   const modalChat = () => setOpen(!open);
 
   return (
@@ -37,7 +45,18 @@ function App() {
         <MessageProvider>
           <div className="relative">
             {open ? (
-              <MessageComponent modalChat={modalChat} />
+              <>
+                <MessageComponent
+                  modalChat={modalChat}
+                  getSelectUserIndex={getSelectUserIndex}
+                />
+                {chatScreen.length && (
+                  <ChatContainer
+                    modalChat={modalChat}
+                    getSelectUserIndex={getSelectUserIndex}
+                  />
+                )}
+              </>
             ) : (
               <MessageComponentSearch modalChat={modalChat} />
             )}

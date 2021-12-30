@@ -1,8 +1,8 @@
 import React from "react";
 
-function Users() {
+function Users({getSelectUserIndex,index}) {
   return (
-    <div className="flex p-2 border-b overflow-hidden cursor-pointer">
+    <div onClick={()=>getSelectUserIndex(index)} className="flex p-2 border-b overflow-hidden cursor-pointer">
       <div className="">
         <img
           className="rounded-full object-cover w-10 h-10"

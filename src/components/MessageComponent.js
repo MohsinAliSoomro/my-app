@@ -5,9 +5,9 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { FaEdit } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 
-function MessageComponent({ modalChat }) {
+function MessageComponent({ modalChat, getSelectUserIndex }) {
   return (
-    <div className="fixed top-20 overflow-scroll right-0 bottom-0 border">
+    <div className="fixed top-20 overflow-y-scroll right-0 bottom-0 border">
       <div className="w-72 p-2">
         <div className="flex justify-between border-b">
           <div className="flex">
@@ -32,7 +32,7 @@ function MessageComponent({ modalChat }) {
         </div>
         <ChatSearchInput />
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-          <Users />
+          <Users key={i} getSelectUserIndex={getSelectUserIndex} index={i} />
         ))}
       </div>
     </div>
